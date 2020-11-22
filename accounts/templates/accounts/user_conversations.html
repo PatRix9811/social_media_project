@@ -1,0 +1,19 @@
+{% extends 'accounts/loggedin_user_base.html' %}
+{% block mian-content-block %}
+	<h2>Messages</h2>
+	<div id= 'conv_container'>
+		{% for conversation in conversations %}
+			<div class= 'conv_bar'>
+				<div class= 'conv_check'><input class="message_chck" type="checkbox"/></div>
+				<a href ='{% url 'messages' conversation %}'><div class= 'conv_name'>
+					{% for profile in conversation.profile_set.all %}
+						{% if not profile.user.username == my_profile.user.username %}
+							<div id="conv_picture" style="background-image:url({{MEDIA_URL}}{{profile.user.profile.image}}); width:40px; height:40px; border:1px solid; border-radius:100%; background-size:100%"></div>
+						{% endif %}
+					{% endfor %} 
+					<div id="conv_title">{{conversation}}</div>
+				</div></a>
+			</div>
+		{% endfor %}
+	</div>
+{% endblock %}

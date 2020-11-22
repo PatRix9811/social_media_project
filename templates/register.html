@@ -1,0 +1,14 @@
+{% extends 'home.html' %}
+
+{% block content %}
+
+	<div id = 'register'>
+		Rejestracja:<br>
+		<form action = "{% url 'login' %}" method = "POST">{% csrf_token %}
+			{{register_form.as_p}}
+			<input type = 'submit' value = 'Zarejestruj' name = 'register_btn'>
+		</form>
+		<small>Posiadasz już konto? <a href = '{% url 'login' %}'> Zaloguj sie</a></small>
+	</div>
+
+{% endblock %}

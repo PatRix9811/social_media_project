@@ -1,0 +1,15 @@
+{% extends 'home.html' %}
+
+{% block content %}
+	
+	<div id = 'login'>
+		Logowanie:<br>
+		{{ info }}
+		<form method = 'POST'>{% csrf_token %}
+			{{login_form.as_p}}
+			<input type = 'submit' value = 'Zaloguj' name = 'register_btn'>
+		</form>
+		<small> Nie masz jeszcze konta? <a href='{% url 'register' %}'>Zarejestrój sie teraz</a></small>
+	</div>
+
+{% endblock %}
