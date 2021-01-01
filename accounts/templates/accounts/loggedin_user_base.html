@@ -8,23 +8,28 @@
 	<link href='{% static 'accounts/conversations.css' %}' rel='stylesheet' type='text/css'>
 </head>
 <body>
-	<div class=  'grid-container'>
-		<div class = 'main-content'>
-			{% block mian-content-block %}
-				<h2>Main Content Bolck</h2>
+	<script>
+		function click()
+		{
+			alert("Sorry. \nSearchin not avilable.");
+		}
+	</script>
+	<div id="container">
+		<div id="up-bar">
+			<div id="photo" style= 'background-image:url({{MEDIA_URL}}{{ profile_photo }})'></div>
+			<div id= "search-input"><input id="search" type="text" placeholder="Search:"><a href="javascript:click()"><img src="https://www.pikpng.com/pngl/m/333-3335603_loop-free-icon-loop-icon-clipart.png" alt="Loop Free Icon - Loop Icon Clipart@pikpng.com"/></a></div>
+			<div id="menu">
+				<a href="{% url 'logout' %}"><div class="menu-button" id="exit" ></div></a>
+				<div class="menu-button" id="friends"></div>
+				<a href="{% url 'conversations' %}"><div class="menu-button" id="messages"></div></a>
+				<a href="{% url 'user_home' %}"><div class="menu-button" id="profile"></div></a>
+				<div class="menu-button" id="options"></div>
+			</div>
+			<div id="logo">YooloFriends</div>
+		</div>
+		<div id="content">
+			{% block content %}
 			{% endblock %}
-		</div>
-		<div class = 'profile-image' style= 'background-image:url({{MEDIA_URL}}{{ profile_photo }})'></div>
-		<div id = 'search'> 
-			<input id = 'search_field' type = 'text' placeholder = 'Find friends'><br>
-			<input id = 'search_btn' type = 'button' value = "Search" onclick = 'find_message()' >
-		</div>
-		<div class = 'btn1'>
-			<div class= 'square-button' id='btn-options'><a href =''>O</a></div>
-			<div class= 'square-button' id = 'btn-logout'><a href ='{% url 'logout'%}'>X</a></div>
-			<div class= 'square-button' id = 'btn-profile'><a href ='{% url 'user_home'%}'>P</a></div>
-			<div class= 'square-button' id = 'btn-friends'><a href =''>F</a></div>
-			<div id= 'circle-button' id = 'btn-message'><a href ='{% url 'conversations'%}'>M</a></div>
 		</div>
 	</div>
 </body>

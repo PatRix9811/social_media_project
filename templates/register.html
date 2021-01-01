@@ -3,12 +3,39 @@
 {% block content %}
 
 	<div id = 'register'>
-		Rejestracja:<br>
-		<form action = "{% url 'login' %}" method = "POST">{% csrf_token %}
-			{{register_form.as_p}}
-			<input type = 'submit' value = 'Zarejestruj' name = 'register_btn'>
-		</form>
-		<small>Posiadasz już konto? <a href = '{% url 'login' %}'> Zaloguj sie</a></small>
+		<div id='register-form'>
+			<form action = "{% url 'login' %}" method = "POST">{% csrf_token %}
+				<div class = 'reg-input'>
+					{{register_form.username.label_tag}}{{register_form.username}}
+					<br> {{register_form.username.error}}
+				</div>
+				<div class = 'reg-help'>
+					{{register_form.username.help_text}}
+				</div>
+				<br>
+				<div class = 'reg-input'>
+					{{register_form.password1.label_tag}}{{register_form.password1}}
+					<br> {{register_form.password1.error}}
+				</div>
+				<div class = 'reg-help'>
+					{{register_form.password1.help_text}}
+				</div>
+				<br>
+				<div class = 'reg-input'>
+					Confirm<br>password:{{register_form.password2}}
+					<br> {{register_form.password2.error}}
+				</div>
+				<div class = 'reg-help'>
+					{{register_form.password2.help_text}}
+				</div>
+				<br>
+				<input id= 'register-btn' type = 'submit' value = 'Register' name = 'register_btn'>
+			</form>
+			<div id='information'>
+				Do you have an account?<br>
+				Log in <a href = '{% url 'login' %}'>here</a>
+			</div>
+		</div>
 	</div>
 
 {% endblock %}
