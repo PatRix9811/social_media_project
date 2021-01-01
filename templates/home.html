@@ -4,10 +4,13 @@
 <html>
 <head>
 	<title>YooloFriends</title>
+	<link href= '{% static 'YooloFriends/home.css' %}' rel="stylesheet" type="text/css">
 </head>
 <body>
-	{% block content %}
-	Home page
-	{% endblock %}
+	<div id = "content">
+		<div id='logo'><a href="{% url 'login'%}">YooloFriends</a></div>
+		{% block content %}
+		{% endblock %}
+	</div>
 </body>
 </html>
