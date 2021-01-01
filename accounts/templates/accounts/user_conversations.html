@@ -1,5 +1,6 @@
 {% extends 'accounts/loggedin_user_base.html' %}
 {% block content %}
+	<div id= "conv-area">
 		{% for conversation in conversations %}
 			<div class=conv>
 				{% for profile in conversation.profile_set.all %}
@@ -29,5 +30,6 @@
 					</div>
 			</div>
 		{% endfor %}
+	</div>
 
 {% endblock %}

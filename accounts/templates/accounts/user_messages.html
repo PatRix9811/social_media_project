@@ -1,22 +1,33 @@
 {% extends 'accounts/loggedin_user_base.html' %}
 {% block content %}
-	<h2>{{ conversation }}</h2>
-	<div id= 'messages_container'>
-		<div id = "messages">
-			{% for message in conversation.messages.all %}
-				{% if not user.username == message.profile_set.get.user.username %}
-					<div class = 'other_message'>
-						<div id="message">{{message}}</div>
-						<div id="picture" style="background-image: url({{MEDIA_URL}}{{message.profile_set.get.user.profile.image}})"></div>
-					</div><br>
+<script>
+	function send_mesage()
+	{
+		var message = document.getElementById("message-to-send").value;
+		alert(message);
+		document.getElementById("message-to-send").value = "";
+	}
+</script>
+	<div id="message-area">
+		{% for message in conversation.messages.all %}
+		{% if message.profile_set.first.user.username == request.user.username %}
+			<div class = "mess" style="margin-left:50%">
+		{% else %}
+			<div class = "mess">
+		{% endif %}
+				<div class = "conv-image" style="background-image: url({{MEDIA_URL}}{{message.profile_set.first.image}});"></div>
+				<div class = "conv-name">{{message.profile_set.first.user.username}}</div>
+				{% if message.profile_set.first.user.username != request.user.username %}
+					<div class = "conv-content"><div class="not-my-mess">{{message}}</div></div>
 				{% else %}
-					<div class = 'my_message'>{{message}}</div><br>
+					<div class = "conv-content"><div class="my-mess">{{message}}</div></div>
 				{% endif %}
-			{% endfor %}
-		</div>
-		<div id = 'input_message'>
-			<input type= 'text' name= 'new_message' id = "new_message">
-			<input type = 'submit' value = 'Send' id = "new_message_btn">
-		</div>
+				<div class = "conv-date">{{message.date | date:"d.m.Y | H.i"}}</div>
+			</div>
+		{% endfor %}
+	</div>
+	<div id = "new-message-area">
+		<input id ="message-to-send" type="text" placeholder="Your message:">
+		<div id="send-button" onclick="javascript:send_mesage()"></div>
 	</div>
 {% endblock %}
