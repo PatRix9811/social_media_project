@@ -4,6 +4,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import redirect
 
 from .forms import LoginForm
+from chat.forms import MessageForm
+from chat.models import MessageModel
 
 
 def register_view(request):
@@ -75,4 +77,11 @@ def user_messages_view(request, conv = None):
 
 	user = request.user
 	conversation = user.profile.conversations.filter(name=conv)[0]
-	return render(request,'accounts/user_messages.html', { 'profile_photo'	: request.user.profile.image, 'conversation':conversation,})
+	form = MessageForm()
+	if request.method == "POST":
+		message = request.POST['message']
+		new_message = MessageModel(conversation=conversation,message=message)
+		new_message.save()
+		user.profile.messages.add(new_message)
+	
+	return render(request,'accounts/user_messages.html', { 'profile_photo'	: request.user.profile.image, 'conversation':conversation,"message_form":form,})
