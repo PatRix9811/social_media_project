@@ -49,13 +49,6 @@ def logout_view(request):
 	logout(request)
 	return redirect('login')
 
-
-def user_home_view(request):
-	if not request.user.is_authenticated:
-		return redirect('login')
-
-	return render(request, 'accounts/loggedin_user_base.html', {'username':request.user.username,'profile_photo': request.user.profile.image,})
-
 def user_conversations_view(request):
 	if not request.user.is_authenticated:
 		return redirect('login')
@@ -85,3 +78,9 @@ def user_messages_view(request, conv = None):
 		user.profile.messages.add(new_message)
 	
 	return render(request,'accounts/user_messages.html', { 'profile_photo'	: request.user.profile.image, 'conversation':conversation,"message_form":form,})
+
+def user_profile_view(request):
+	if not request.user.is_authenticated:
+		return redirect('login')
+
+	return render(request,'accounts/user_profile.html',{'profile_photo'	: request.user.profile.image,})
