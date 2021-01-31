@@ -8,12 +8,6 @@
 	<link href='{% static 'accounts/conversations.css' %}' rel='stylesheet' type='text/css'>
 </head>
 <body>
-	<script>
-		function click()
-		{
-			alert("Sorry. \nSearchin not avilable.");
-		}
-	</script>
 	<div id="container">
 		<div id="up-bar">
 			<div id="photo" style= 'background-image:url({{MEDIA_URL}}{{ profile_photo }})'></div>
@@ -32,5 +26,18 @@
 			{% endblock %}
 		</div>
 	</div>
+
+	<script>
+		setTimeout(send_message(),{},1000);
+		function click()
+		{
+			alert("Sorry. \nSearchin not avilable.");
+		}
+
+		function send_message()
+		{
+			window.scrollTo(0,document.body.scrollHeight);
+		}
+	</script>
 </body>
 </html>

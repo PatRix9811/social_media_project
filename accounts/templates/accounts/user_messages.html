@@ -1,13 +1,5 @@
 {% extends 'accounts/loggedin_user_base.html' %}
 {% block content %}
-<script>
-	function send_mesage()
-	{
-		var message = document.getElementById("message-to-send").value;
-		alert(message);
-		document.getElementById("message-to-send").value = "";
-	}
-</script>
 	<div id="message-area">
 		{% for message in conversation.messages.all %}
 		{% if message.profile_set.first.user.username == request.user.username %}
@@ -27,7 +19,14 @@
 		{% endfor %}
 	</div>
 	<div id = "new-message-area">
-		<input id ="message-to-send" type="text" placeholder="Your message:">
-		<div id="send-button" onclick="javascript:send_mesage()"></div>
+		<div id="message-form-area">
+			<form method="POST" autocomplete="off">
+				<div id = "message-in-form-area">
+				{% csrf_token %}
+				{{message_form.message}} 
+				<input id = "send-button" type="submit" value="Send message" onload="send_message()">
+				</div>
+			</form>
+		</div>
 	</div>
 {% endblock %}

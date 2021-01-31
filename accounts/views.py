@@ -4,6 +4,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import redirect
 
 from .forms import LoginForm
+from chat.forms import MessageForm
+from chat.models import MessageModel
 
 
 def register_view(request):
@@ -47,13 +49,6 @@ def logout_view(request):
 	logout(request)
 	return redirect('login')
 
-
-def user_home_view(request):
-	if not request.user.is_authenticated:
-		return redirect('login')
-
-	return render(request, 'accounts/loggedin_user_base.html', {'username':request.user.username,'profile_photo': request.user.profile.image,})
-
 def user_conversations_view(request):
 	if not request.user.is_authenticated:
 		return redirect('login')
@@ -75,4 +70,17 @@ def user_messages_view(request, conv = None):
 
 	user = request.user
 	conversation = user.profile.conversations.filter(name=conv)[0]
-	return render(request,'accounts/user_messages.html', { 'profile_photo'	: request.user.profile.image, 'conversation':conversation,})
+	form = MessageForm()
+	if request.method == "POST":
+		message = request.POST['message']
+		new_message = MessageModel(conversation=conversation,message=message)
+		new_message.save()
+		user.profile.messages.add(new_message)
+	
+	return render(request,'accounts/user_messages.html', { 'profile_photo'	: request.user.profile.image, 'conversation':conversation,"message_form":form,})
+
+def user_profile_view(request):
+	if not request.user.is_authenticated:
+		return redirect('login')
+
+	return render(request,'accounts/user_profile.html',{'profile_photo'	: request.user.profile.image,})
