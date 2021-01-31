@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from accounts.views import login_view, register_view, logout_view, user_home_view, user_messages_view, user_conversations_view
+from accounts.views import login_view, register_view, logout_view, user_messages_view, user_conversations_view, user_profile_view
 from . import settings
 from django.contrib.staticfiles.urls import static
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
@@ -26,7 +26,7 @@ urlpatterns = [
     path('',login_view, name = 'login'),
     path('register', register_view, name = 'register'),
     path('logout', logout_view, name = 'logout'),
-    path('profile', user_home_view, name = 'user_home'),
+    path('profile', user_profile_view, name = 'user_home'),
     path('conversations', user_conversations_view, name='conversations'),
     path('conversations/<conv>', user_messages_view, name = 'messages'),
 ]
