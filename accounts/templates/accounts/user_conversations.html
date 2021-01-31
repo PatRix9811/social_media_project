@@ -1,19 +1,35 @@
 {% extends 'accounts/loggedin_user_base.html' %}
-{% block mian-content-block %}
-	<h2>Messages</h2>
-	<div id= 'conv_container'>
+{% block content %}
+	<div id= "conv-area">
 		{% for conversation in conversations %}
-			<div class= 'conv_bar'>
-				<div class= 'conv_check'><input class="message_chck" type="checkbox"/></div>
-				<a href ='{% url 'messages' conversation %}'><div class= 'conv_name'>
-					{% for profile in conversation.profile_set.all %}
-						{% if not profile.user.username == my_profile.user.username %}
-							<div id="conv_picture" style="background-image:url({{MEDIA_URL}}{{profile.user.profile.image}}); width:40px; height:40px; border:1px solid; border-radius:100%; background-size:100%"></div>
-						{% endif %}
-					{% endfor %} 
-					<div id="conv_title">{{conversation}}</div>
-				</div></a>
+			<div class=conv>
+				{% for profile in conversation.profile_set.all %}
+					{% if not profile.user.username == my_profile.user.username %}
+						<div class="conv-image" style="background-image:url({{MEDIA_URL}}{{profile.user.profile.image}})"></div>
+					{% endif %}
+				{% endfor %}
+				<div class= "conv-name"><a href="{% url 'messages' conversation %}">{{conversation}}</a></div>
+					<div class= "conv-content">
+						{% for mess in conversation.messages.all reversed %}
+							{% if forloop.counter == 1 %}
+								{% if mess.profile_set.first.user.username == my_profile.user.username %}
+									<div class="my-mess"><a href="{% url 'messages' conversation %}">{{mess}}</a></div>
+								{% else %}
+									<div class="not-my-mess"><a href="{% url 'messages' conversation %}">{{mess}}</a></div>
+								{% endif %}
+							{% endif %}
+						{% endfor %}
+							
+					</div>
+					<div class= "conv-date">
+						{% for mess in conversation.messages.all reversed %}
+							{% if forloop.counter == 1 %}
+								{{ mess.date | date:"d.m.Y | H:i" }}
+							{% endif %}
+						{% endfor %}
+					</div>
 			</div>
 		{% endfor %}
 	</div>
+
 {% endblock %}
